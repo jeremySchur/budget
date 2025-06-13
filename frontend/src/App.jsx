@@ -1,4 +1,4 @@
-import Expenses from './components/Expenses';
+import Expenses from './Expenses';
 import Header from './components/Header';
 
 function App() {
