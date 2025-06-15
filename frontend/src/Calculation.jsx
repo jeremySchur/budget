@@ -2,10 +2,16 @@ import { useState } from 'react';
 import Income from './components/Income';
 import DonutChart from './components/DonutChart';
 
-function Calculation({ expenses }) {
+function Calculation({ expenses, filterCategory }) {
     const [income, setIncome] = useState('5000.00');
 
-    const totalExpenses = expenses ? expenses.reduce((total, expense) => total + (expense.amount || 0), 0) : 0;
+    const filteredExpenses = expenses && filterCategory 
+        ? (filterCategory === 'all' 
+            ? expenses 
+            : expenses.filter(expense => expense.category.toLowerCase() === filterCategory))
+        : expenses;
+
+    const totalExpenses = filteredExpenses ? filteredExpenses.reduce((total, expense) => total + (expense.amount || 0), 0) : 0;
     const availableIncome = parseFloat(income) - totalExpenses;
 
     return (

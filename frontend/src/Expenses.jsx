@@ -3,9 +3,7 @@ import Expense from './components/Expense';
 
 import cartOutlineSvg from './assets/cart-outline.svg';
 
-function Expenses({ expenses }) {
-    const [filterCategory, setFilterCategory] = useState('all');
-
+function Expenses({ expenses, filterCategory, setFilterCategory }) {
     const filteredExpenses = filterCategory === 'all' 
         ? expenses 
         : expenses.filter(expense => expense.category.toLowerCase() === filterCategory);

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Calculation from './Calculation';
 import Expenses from './Expenses';
 import Header from './components/Header';
@@ -29,14 +30,23 @@ const expenses = [{
 }];
 
 function App() {
+  const [filterCategory, setFilterCategory] = useState('all');
+
   return (
     <div className="w-screen h-screen bg-primary p-5">
       <Header />
       <hr className="border-t border-box-color-light mt-4 w-full" />
 
       <section className="flex my-20 h-3/4 justify-between">
-        <Expenses expenses={expenses} />
-        <Calculation expenses={expenses} />
+        <Expenses 
+          expenses={expenses} 
+          filterCategory={filterCategory}
+          setFilterCategory={(category) => setFilterCategory(category)}
+        />
+        <Calculation 
+          expenses={expenses} 
+          filterCategory={filterCategory}
+        />
         <Calculation />
       </section>
     </div>
