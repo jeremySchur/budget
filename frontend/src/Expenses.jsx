@@ -3,33 +3,7 @@ import Expense from './components/Expense';
 
 import cartOutlineSvg from './assets/cart-outline.svg';
 
-const expenses = [{
-    id: 1,
-    amount: 50.00,
-    category: 'Hobby',
-    description: 'Guitar strings and picks',
-    date: '2023-10-01'
-}, {
-    id: 2,
-    amount: 15.99,
-    category: 'Subscription',
-    description: 'Monthly music streaming service',
-    date: '2023-10-05'
-}, {
-    id: 3,
-    amount: 100.00,
-    category: 'Savings',
-    description: 'Monthly savings deposit',
-    date: '2023-10-10'
-}, {
-    id: 4,
-    amount: 20.00,
-    category: 'Various',
-    description: 'Coffee with friends',
-    date: '2023-10-15'
-}];
-
-function Expenses() {
+function Expenses({ expenses }) {
     const [filterCategory, setFilterCategory] = useState('all');
 
     const filteredExpenses = filterCategory === 'all' 
