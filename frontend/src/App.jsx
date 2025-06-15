@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Calculation from './Calculation';
 import Expenses from './Expenses';
+import GoalTracking from './GoalTracking';
 import Header from './components/Header';
 
 const expenses = [{
@@ -47,7 +48,7 @@ function App() {
           expenses={expenses} 
           filterCategory={filterCategory}
         />
-        <Calculation />
+        <GoalTracking />
       </section>
     </div>
   );
