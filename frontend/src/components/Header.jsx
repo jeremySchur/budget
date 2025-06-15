@@ -9,7 +9,7 @@ function Header() {
                 <h1 className="text-5xl font-bold text-white">Monthly <span className="text-complementary">Budget</span></h1>
             </div>
             <button 
-                className="ml-auto my-auto bg-contrast px-10 py-3 rounded font-semibold cursor-pointer hover:opacity-80"
+                className="ml-auto my-auto bg-contrast px-10 py-3 rounded font-semibold cursor-pointer hover:bg-contrast-dark"
             >
                 New Expense
             </button>
