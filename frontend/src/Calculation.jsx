@@ -25,11 +25,11 @@ function Calculation({ expenses, filterCategory }) {
             
             <div className="flex justify-around mt-4 w-full">
                 <div className="bg-black py-2 px-4 text-center w-5/12">
-                    <h4 className="text-lg font-semibold text-white mb-1">AVAILABLE</h4>
+                    <h4 className="text-lg font-semibold text-white">AVAILABLE</h4>
                     <p className="text-2xl font-bold text-complementary">${availableIncome.toFixed(2)}</p>
                 </div>
                 <div className="bg-black py-2 px-4 text-center w-5/12">
-                    <h4 className="text-lg font-semibold text-white mb-1">SPENT</h4>
+                    <h4 className="text-lg font-semibold text-white">SPENT</h4>
                     <p className="text-2xl font-bold text-contrast">${totalExpenses.toFixed(2)}</p>
                 </div>
             </div>
