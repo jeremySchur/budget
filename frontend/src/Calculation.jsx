@@ -36,7 +36,7 @@ function Calculation({ expenses, filterCategory }) {
             <hr className="border-t-1 border-dotted mt-6 w-full" />
 
             <button
-                className="mt-6 bg-contrast px-16 py-3 rounded font-semibold cursor-pointer hover:bg-contrast-dark"
+                className="mt-6 w-full bg-contrast px-16 py-3 rounded font-semibold cursor-pointer hover:bg-contrast-dark"
             >
                 Reset Expenses
             </button>
