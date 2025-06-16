@@ -22,6 +22,15 @@ function App() {
     fetchExpenses();
   }, []);
 
+  const deleteExpense = async (id) => {
+    try {
+      await axios.delete('/expenses', { data: { id } });
+      setExpenses(prevExpenses => prevExpenses.filter(expense => expense.id !== id));
+    } catch (error) {
+      console.error('Error deleting expense');
+    }
+  };
+
   return (
     <div className="w-screen h-screen bg-primary p-5">
       <Header />
@@ -32,6 +41,7 @@ function App() {
           expenses={expenses} 
           filterCategory={filterCategory}
           setFilterCategory={(category) => setFilterCategory(category)}
+          onDeleteExpense={deleteExpense}
         />
         <Calculation 
           expenses={expenses} 

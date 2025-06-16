@@ -12,7 +12,7 @@ const categoryMap = {
     Various: variousSvg
 };
 
-function Expense({ expense }) {
+function Expense({ expense, onDelete }) {
     const [isClicked, setIsClicked] = useState(false);
 
     const svgIcon = categoryMap[expense.category];
@@ -39,7 +39,7 @@ function Expense({ expense }) {
                         className="ml-auto cursor-pointer"
                         onClick={(e) => {
                             e.stopPropagation();
-                            console.log(`Delete expense with ID: ${expense.id}`);
+                            onDelete(expense.id);
                         }}
                     >
                         <img src={trashSvg} alt="Delete Icon" className="h-6 w-6" />

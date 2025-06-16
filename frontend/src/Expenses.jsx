@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import Expense from './components/Expense';
-
 import cartOutlineSvg from './assets/cart-outline.svg';
 
-function Expenses({ expenses, filterCategory, setFilterCategory }) {
+function Expenses({ expenses, filterCategory, setFilterCategory, onDeleteExpense }) {
     const filteredExpenses = filterCategory === 'all' 
         ? expenses 
         : expenses.filter(expense => expense.category.toLowerCase() === filterCategory);
@@ -11,10 +9,10 @@ function Expenses({ expenses, filterCategory, setFilterCategory }) {
     const handleFilterChange = (e) => {
         setFilterCategory(e.target.value);
     };
-
+    
     const ExpenseList = () => {
         return filteredExpenses.map(expense => (
-            <Expense key={expense.id} expense={expense} />
+            <Expense key={expense.id} expense={expense} onDelete={onDeleteExpense} />
         ));
     };
 
