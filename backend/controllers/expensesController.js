@@ -2,7 +2,10 @@ const db = require('../db/database');
 
 const getExpenses = (req, res) => {
     try {
-        const stmt = db.prepare('SELECT * FROM expenses');
+        const stmt = db.prepare(`
+            SELECT * FROM expenses
+            WHERE strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
+        `);
         const expenses = stmt.all();
         return res.status(200).json(expenses);
     } catch (error) {
