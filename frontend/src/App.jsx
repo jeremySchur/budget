@@ -1,37 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Calculation from './Calculation';
 import Expenses from './Expenses';
 import GoalTracking from './GoalTracking';
 import Header from './components/Header';
-
-const expenses = [{
-    id: 1,
-    amount: 50.00,
-    category: 'Hobby',
-    description: 'Guitar strings and picks',
-    date: '2023-10-01'
-}, {
-    id: 2,
-    amount: 15.99,
-    category: 'Subscription',
-    description: 'Monthly music streaming service',
-    date: '2023-10-05'
-}, {
-    id: 3,
-    amount: 100.00,
-    category: 'Savings',
-    description: 'Monthly savings deposit',
-    date: '2023-10-10'
-}, {
-    id: 4,
-    amount: 20.00,
-    category: 'Various',
-    description: 'Coffee with friends',
-    date: '2023-10-15'
-}];
+import axios from './api/axios';
 
 function App() {
+  const [expenses, setExpenses] = useState([]);
   const [filterCategory, setFilterCategory] = useState('all');
+
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      try {
+        const response = await axios.get('/expenses');
+        setExpenses(response.data);
+      } catch (error) {
+        console.error('Error fetching expenses');
+      }
+    };
+
+    fetchExpenses();
+  }, []);
 
   return (
     <div className="w-screen h-screen bg-primary p-5">
