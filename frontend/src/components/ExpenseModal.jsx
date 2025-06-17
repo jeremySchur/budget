@@ -6,23 +6,23 @@ function ExpenseModal({ isOpen, onClose, onExpenseAdded }) {
         description: '',
         amount: '',
         date: new Date().toISOString().split('T')[0],
-        category: 'various',
-        recurring: false
+        category: 'Various',
+        recurring: 0
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const categories = [
-        { value: 'hobby', label: 'Hobby' },
-        { value: 'savings', label: 'Savings' },
-        { value: 'subscription', label: 'Subscription' },
-        { value: 'various', label: 'Various' }
+        { value: 'Hobby', label: 'Hobby' },
+        { value: 'Savings', label: 'Savings' },
+        { value: 'Subscription', label: 'Subscription' },
+        { value: 'Various', label: 'Various' }
     ];
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox' ? (checked === true ? 1 : 0) : value
         }));
     };
 
@@ -38,8 +38,8 @@ function ExpenseModal({ isOpen, onClose, onExpenseAdded }) {
                 description: '',
                 amount: '',
                 date: new Date().toISOString().split('T')[0],
-                category: 'various',
-                recurring: false
+                category: 'Various',
+                recurring: 0
             });
         } catch (error) {
             console.error('Error adding expense:', error);

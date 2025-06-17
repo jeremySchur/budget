@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from '../api/axios';
 
 function GoalModal({ isOpen, onClose, onGoalAdded }) {
     const [formData, setFormData] = useState({
@@ -22,11 +23,12 @@ function GoalModal({ isOpen, onClose, onGoalAdded }) {
 
         try {
             const goalData = {
-                ...formData,
-                currentAmount: parseFloat(formData.currentAmount) || 0,
-                targetAmount: parseFloat(formData.targetAmount)
+                name: formData.name,
+                target_amount: parseFloat(formData.targetAmount),
+                current_amount: parseFloat(formData.currentAmount) || 0
             };
 
+            await axios.post('/goals', goalData);
             onGoalAdded(goalData);
             onClose();
             setFormData({
