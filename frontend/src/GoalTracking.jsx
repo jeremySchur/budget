@@ -1,32 +1,21 @@
 import { useState } from 'react';
 import Goal from './components/Goal';
-
-const initialGoals = [
-    {
-        id: 1,
-        name: 'Vacation Fund',
-        targetAmount: 2000.00,
-        currentAmount: 850.00
-    },
-    {
-        id: 2,
-        name: 'Emergency Fund',
-        targetAmount: 5000.00,
-        currentAmount: 1200.00
-    },
-    {
-        id: 3,
-        name: 'New Car',
-        targetAmount: 15000.00,
-        currentAmount: 3500.00
-    }
-];
+import GoalModal from './components/GoalModal';
 
 function GoalTracking() {
-    const [goals, setGoals] = useState(initialGoals);
+    const [goals, setGoals] = useState([]);
+    const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
 
     const handleNewGoal = () => {
-        console.log('New goal button clicked');
+        setIsGoalModalOpen(true);
+    };
+
+    const handleGoalAdded = (newGoal) => {
+        const goalWithId = {
+            ...newGoal,
+            id: Math.max(...goals.map(g => g.id), 0) + 1
+        };
+        setGoals(prevGoals => [...prevGoals, goalWithId]);
     };
 
     const deleteGoal = (goalId) => {
@@ -34,7 +23,7 @@ function GoalTracking() {
     };
 
     const updateGoal = (goalId, updatedGoal) => {
-        setGoals(goals.map(goal => 
+        setGoals(goals.map(goal =>
             goal.id === goalId ? { ...goal, ...updatedGoal } : goal
         ));
     };
@@ -43,7 +32,7 @@ function GoalTracking() {
         <div className="flex flex-col h-full w-1/4 p-6 bg-white">
             <h3 className="text-3xl mx-auto">Goal Tracking</h3>
             <hr className="border-t-1 border-dotted mt-4 w-full" />
-            
+
             <button
                 onClick={handleNewGoal}
                 className="mt-6 bg-contrast px-16 py-3 rounded font-semibold cursor-pointer hover:bg-contrast-dark"
@@ -64,9 +53,14 @@ function GoalTracking() {
                             onDelete={deleteGoal}
                             onUpdate={updateGoal}
                         />
-                    ))
-                )}
+                    )))}
             </div>
+
+            <GoalModal
+                isOpen={isGoalModalOpen}
+                onClose={() => setIsGoalModalOpen(false)}
+                onGoalAdded={handleGoalAdded}
+            />
         </div>
     );
 };
