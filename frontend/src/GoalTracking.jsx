@@ -9,11 +9,13 @@ function GoalTracking() {
     const handleNewGoal = () => {
         setIsGoalModalOpen(true);
     };
-
+    
     const handleGoalAdded = (newGoal) => {
         const goalWithId = {
-            ...newGoal,
-            id: Math.max(...goals.map(g => g.id), 0) + 1
+            id: Math.max(...goals.map(g => g.id), 0) + 1,
+            name: newGoal.name,
+            targetAmount: newGoal.target_amount,
+            currentAmount: newGoal.current_amount
         };
         setGoals(prevGoals => [...prevGoals, goalWithId]);
     };

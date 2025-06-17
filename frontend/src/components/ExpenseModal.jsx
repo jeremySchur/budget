@@ -42,7 +42,7 @@ function ExpenseModal({ isOpen, onClose, onExpenseAdded }) {
                 recurring: 0
             });
         } catch (error) {
-            console.error('Error adding expense:', error);
+            console.error('Error adding expense');
         } finally {
             setIsSubmitting(false);
         }

@@ -37,7 +37,7 @@ function GoalModal({ isOpen, onClose, onGoalAdded }) {
                 targetAmount: ''
             });
         } catch (error) {
-            console.error('Error adding goal:', error);
+            console.error('Error adding goal');
         } finally {
             setIsSubmitting(false);
         }
