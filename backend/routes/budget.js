@@ -13,6 +13,9 @@ router.route('/expenses')
   .post(expensesController.addExpense)
   .delete(expensesController.deleteExpense);
 
+router.route('/expenses/reset')
+  .delete(expensesController.resetExpenses);
+
 router.route('/goals')
   .get(goalsController.getGoals)
   .post(goalsController.addGoal)
