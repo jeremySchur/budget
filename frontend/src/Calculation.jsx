@@ -1,9 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Income from './components/Income';
 import DonutChart from './components/DonutChart';
+import axios from './api/axios';
 
 function Calculation({ expenses, filterCategory }) {
-    const [income, setIncome] = useState('5000.00');
+    const [income, setIncome] = useState('0.00');
+    
+    useEffect(() => {
+        const fetchIncome = async () => {
+            try {
+                const response = await axios.get('/income');
+                if (response.data) {
+                    setIncome(response.data.amount.toString());
+                }
+            } catch (error) {
+                console.error('Error fetching income:', error);
+            }
+        };
+
+        fetchIncome();
+    }, []);
+
+    const updateIncome = async (newAmount) => {
+        try {
+            await axios.patch('/income', { amount: parseFloat(newAmount) });
+        } catch (error) {
+            console.error('Error updating income');
+        }
+    };
 
     const filteredExpenses = expenses && filterCategory 
         ? (filterCategory === 'all' 
@@ -19,7 +43,11 @@ function Calculation({ expenses, filterCategory }) {
             <h3 className="text-3xl">Calculation</h3>
             <hr className="border-t-1 border-dotted mt-4 w-full" />
             
-            <Income income={income} setIncome={(value) => setIncome(value)}/>
+            <Income 
+                income={income} 
+                setIncome={(value) => setIncome(value)}
+                onIncomeUpdate={updateIncome}
+            />
             
             <DonutChart income={income} totalExpenses={totalExpenses} />
             

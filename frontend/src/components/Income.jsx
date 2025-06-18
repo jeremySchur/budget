@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-function Income({ income, setIncome }) {
+function Income({ income, setIncome, onIncomeUpdate }) {
     const [isEditing, setIsEditing] = useState(false);
     const inputRef = useRef(null);
 
@@ -8,13 +8,20 @@ function Income({ income, setIncome }) {
         setIsEditing(true);
         setIncome('');
     };
-
-    const handleInputBlur = () => {
+    
+    const handleInputBlur = async () => {
         setIsEditing(false);
+        let finalAmount;
         if (income === '' || isNaN(parseFloat(income))) {
+            finalAmount = '0.00';
             setIncome('0.00');
         } else {
-            setIncome(parseFloat(income).toFixed(2));
+            finalAmount = parseFloat(income).toFixed(2);
+            setIncome(finalAmount);
+        }
+        
+        if (onIncomeUpdate) {
+            await onIncomeUpdate(finalAmount);
         }
     };
 
