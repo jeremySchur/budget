@@ -1,0 +1,3 @@
+node_modules
+backend/budget.sqlite
+frontend/dist
