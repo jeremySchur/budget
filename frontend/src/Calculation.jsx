@@ -3,7 +3,7 @@ import Income from './components/Income';
 import DonutChart from './components/DonutChart';
 import axios from './api/axios';
 
-function Calculation({ expenses, filterCategory }) {
+function Calculation({ expenses, filterCategory, onExpensesUpdate }) {
     const [income, setIncome] = useState('0.00');
     
     useEffect(() => {
@@ -26,6 +26,18 @@ function Calculation({ expenses, filterCategory }) {
             await axios.patch('/income', { amount: parseFloat(newAmount) });
         } catch (error) {
             console.error('Error updating income');
+        }
+    };
+
+    const resetExpenses = async () => {
+        try {
+            await axios.delete('/expenses/reset');
+
+            if (onExpensesUpdate) {
+                onExpensesUpdate();
+            }
+        } catch (error) {
+            console.error('Error resetting expenses');
         }
     };
 
@@ -65,6 +77,7 @@ function Calculation({ expenses, filterCategory }) {
 
             <button
                 className="mt-6 w-full bg-contrast px-16 py-3 rounded font-semibold cursor-pointer hover:bg-contrast-dark"
+                onClick={resetExpenses}
             >
                 Reset Expenses
             </button>

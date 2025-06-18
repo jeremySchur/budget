@@ -57,6 +57,7 @@ function App() {
         <Calculation
           expenses={expenses}
           filterCategory={filterCategory}
+          onExpensesUpdate={handleExpenseAdded}
         />
         <GoalTracking />
       </section>
