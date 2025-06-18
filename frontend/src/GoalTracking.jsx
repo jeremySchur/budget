@@ -1,33 +1,80 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Goal from './components/Goal';
 import GoalModal from './components/GoalModal';
+import axios from './api/axios';
 
 function GoalTracking() {
     const [goals, setGoals] = useState([]);
     const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
 
+    useEffect(() => {
+        const fetchGoals = async () => {
+            try {
+                const response = await axios.get('/goals');
+                const formattedGoals = response.data.map(goal => ({
+                    id: goal.id,
+                    name: goal.name,
+                    targetAmount: goal.target_amount,
+                    currentAmount: goal.current_amount
+                }));
+                setGoals(formattedGoals);
+            } catch (error) {
+                console.error('Error fetching goals');
+            }
+        };
+
+        fetchGoals();
+    }, []);
+
     const handleNewGoal = () => {
         setIsGoalModalOpen(true);
     };
     
-    const handleGoalAdded = (newGoal) => {
-        const goalWithId = {
-            id: Math.max(...goals.map(g => g.id), 0) + 1,
-            name: newGoal.name,
-            targetAmount: newGoal.target_amount,
-            currentAmount: newGoal.current_amount
-        };
-        setGoals(prevGoals => [...prevGoals, goalWithId]);
+    const handleGoalAdded = async () => {
+        try {
+            const response = await axios.get('/goals');
+            const formattedGoals = response.data.map(goal => ({
+                id: goal.id,
+                name: goal.name,
+                targetAmount: goal.target_amount,
+                currentAmount: goal.current_amount
+            }));
+            setGoals(formattedGoals);
+        } catch (error) {
+            console.error('Error fetching goals after addition');
+        }
     };
 
-    const deleteGoal = (goalId) => {
-        console.log(`Deleting goal with ID: ${goalId}`);
+    const deleteGoal = async (goalId) => {
+        try {
+            await axios.delete('/goals', { data: { id: goalId } });
+            setGoals(prevGoals => prevGoals.filter(goal => goal.id !== goalId));
+        } catch (error) {
+            console.error('Error deleting goal');
+        }
     };
 
-    const updateGoal = (goalId, updatedGoal) => {
-        setGoals(goals.map(goal =>
-            goal.id === goalId ? { ...goal, ...updatedGoal } : goal
-        ));
+    const updateGoal = async (goalId, updatedGoal) => {
+        try {
+            const updateData = { id: goalId };
+            
+            if (updatedGoal.name !== undefined) {
+                updateData.name = updatedGoal.name;
+            }
+            if (updatedGoal.targetAmount !== undefined) {
+                updateData.target_amount = updatedGoal.targetAmount;
+            }
+            if (updatedGoal.currentAmount !== undefined) {
+                updateData.current_amount = updatedGoal.currentAmount;
+            }
+
+            await axios.patch('/goals', updateData);
+            setGoals(goals.map(goal =>
+                goal.id === goalId ? { ...goal, ...updatedGoal } : goal
+            ));
+        } catch (error) {
+            console.error('Error updating goal');
+        }
     };
 
     return (
