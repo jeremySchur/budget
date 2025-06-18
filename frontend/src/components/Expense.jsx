@@ -17,6 +17,12 @@ function Expense({ expense, onDelete }) {
 
     const svgIcon = categoryMap[expense.category];
 
+    function formatCentralDate(dateString) {
+        const [year, month, day] = dateString.split('-').map(Number);
+        const localDate = new Date(year, month - 1, day);
+        return localDate.toLocaleDateString('en-US', { timeZone: 'America/Chicago' });
+    }
+
     return (
         <div 
             className="border-t-1 border-dashed border-box-color-light p-4 cursor-pointer"
@@ -26,7 +32,7 @@ function Expense({ expense, onDelete }) {
                 <img src={svgIcon} alt="Category Icon" className="h-14 w-14" />
                 <div className="ml-4 flex-1">
                     <h4 className="text-lg font-semibold text-box-color-light">{expense.category}</h4>
-                    <p className="text-sm text-box-color-light">{new Date(expense.date).toLocaleDateString()}</p>
+                    <p className="text-sm text-box-color-light">{formatCentralDate(expense.date)}</p>
                 </div>
                 <div className="ml-auto">
                     <p className="text-lg font-semibold text-box-color-light">${expense.amount.toFixed(2)}</p>
