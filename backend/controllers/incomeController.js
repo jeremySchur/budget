@@ -2,8 +2,12 @@ const db = require('../db/database');
 
 const getIncome = (req, res) => {
     try {
-        const stmt = db.prepare('SELECT * FROM income');
-        const income = stmt.all();
+        const stmt = db.prepare('SELECT * FROM income WHERE id = 1');
+        const income = stmt.get();
+        if (!income) {
+            return res.status(404).json({ error: 'Income record not found' });
+        }
+
         return res.status(200).json(income);
     } catch (error) {
         return res.status(500).json({ error: 'Internal Server Error' });
